@@ -1,1 +1,27 @@
- 
+name: Unzip Archive
+
+on:
+  workflow_dispatch:
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Unzip file
+        run: |
+          unzip 'antigravity (2).zip' -d ./
+      
+      - name: Remove zip file
+        run: |
+          rm 'antigravity (2).zip'
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.name 'GitHub Actions'
+          git config --local user.email 'actions@github.com'
+          git add .
+          git commit -m 'Unzipped antigravity (2).zip - automated extraction' || echo 'No changes to commit'
+          git push origin main 
